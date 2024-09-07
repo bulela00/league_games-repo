@@ -17,8 +17,20 @@ def league_groups(teams_list):
     # split the sorted list into four groups 
     return 
 
+# This function identifies teams in the same location 
+def same_loc(team): 
+    # identify team location 
+    # identify teams in that location 
+    return 
 
-
+# This function extracts the info for the selected team
+def team_info(team):
+    team = team.strip()
+    team = team.split(",") 
+    team_name = team[0]
+    team_location = team[1]
+    team_group = team[2]
+    return
 
 
 # Define teams in the league 
