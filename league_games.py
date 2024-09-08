@@ -5,10 +5,15 @@
 
 #=======Functions=======
 # This function recieves the team information for the teams in the leagues 
-def league_teams(): 
+def league_team(): 
     # accepts teams' name
     # teams' points 
     # teams' location 
+    with open('teams.txt', 'a+', encoding='utf-8-sig') as team_info:
+        info = 0
+        for line in team_info:
+            info +=1 
+
     return 
 
 # This function splits the league teams into four groups based on the team points
