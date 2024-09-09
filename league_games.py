@@ -7,8 +7,11 @@
 # This function recieves the team information for the teams in the leagues 
 def league_team(): 
     # accepts teams' name
+    team_name = input("Enter the team name")
     # teams' points 
+    team_points = input("Enter the team points")
     # teams' location 
+    team_location = input("Enter team location")
     with open('teams.txt', 'a+', encoding='utf-8-sig') as team_info:
         info = 0
         for line in team_info:
