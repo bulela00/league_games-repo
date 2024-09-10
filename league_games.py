@@ -1,7 +1,7 @@
 # League opponents draw 
 
 #=======importing libraries=======
-
+import pandas as pd 
 
 #=======Functions=======
 # This function recieves the team information for the teams in the leagues 
@@ -20,10 +20,20 @@ def league_team():
     return 
 
 # This function splits the league teams into four groups based on the team points
-def league_groups(teams_list): 
+def league_groups(df): 
+    with open('teams.txt', 'r+', encoding='utf-8-sig') as file: 
+        for line in file:
+          pass   
+
     # sort teams based on points 
+    # df is the teams_list 
+    df.sort_values('points', ascending=False) 
     # split the sorted list into four groups 
-    return 
+    gr1 = df.iloc[0:8,:]
+    gr2 = df.iloc[9:17,:]
+    gr3 = df.iloc[18:26,:]
+    gr4 = df.iloc[27:35,:]
+    return(df,gr1, gr2, gr3, gr4) 
 
 # This function identifies teams in the same location 
 def same_loc(team): 
