@@ -35,11 +35,11 @@ def league_groups(df):
     gr4 = df.iloc[27:35,:]
     return(df,gr1, gr2, gr3, gr4) 
 
-# This function identifies teams in the same location 
-def same_loc(team): 
-    # identify team location 
+# This function identifies teams in the same location and excludes them for the team
+def same_loc(team_location, df): 
+    # identify team location
     # identify teams in that location 
-    return 
+    return(mygr1, mygr2, mygr3, mygr4)
 
 # This function extracts the info for the selected team
 def team_info(team):
@@ -48,29 +48,6 @@ def team_info(team):
     team_name = team[0]
     team_location = team[1]
     team_group = team[2]
-    return
+    return (team_name, team_location, team_group)
 
 
-# Define teams in the league 
-# Accept input of team data for teams that have qualified for the team 
-# Team data includes: team location, team grouping 
-
-
-# Define constraints 
-
-
-
-# Define function that selects teams eligible to be opponents to selected team
-
-
-
-# Define order of the draw 
-
-
-# Accept random number for team selection 
-
-# Find out which oponents each team already has 
-
-
-
-# Create case for team selection of each group 
