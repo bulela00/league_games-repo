@@ -6,16 +6,24 @@ import pandas as pd
 #=======Functions=======
 # This function recieves the team information for the teams in the leagues 
 def league_team(): 
-    # accepts teams' name
-    team_name = input("Enter the team name")
-    # teams' points 
-    team_points = input("Enter the team points")
-    # teams' location 
-    team_location = input("Enter team location")
-    with open('teams.txt', 'a+', encoding='utf-8-sig') as team_info:
-        info = 0
-        for line in team_info:
-            info +=1 
+    # confirmation of no. of teams 
+    check = input("How many teams are in the league?")
+    if check == 36: 
+        print('Please enter the team information as prompted')
+        for x in 36:
+            # accepts teams' name
+            team_name = input("Enter the team name")
+            # teams' points 
+            team_points = input("Enter the team points")
+            # teams' location 
+            team_location = input("Enter team location")
+            with open('teams.txt', 'a+', encoding='utf-8-sig') as team_info:
+                info = 0
+                for line in team_info:
+                    info +=1 
+
+    else:
+        print("Invalid number of teams. ")
 
     return 
 
