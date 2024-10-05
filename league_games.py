@@ -44,9 +44,16 @@ def league_groups(df):
     return(df,gr1, gr2, gr3, gr4) 
 
 # This function identifies teams in the same location and excludes them for the team
-def same_loc(team_location, df): 
+def same_loc(team_location, gr1, gr2, gr3, gr4): 
+    mygr1 ={}
     # identify team location
     # identify teams in that location 
+    for team in gr1:
+        if gr1.iloc[team,1] == team_location:
+            print(f'{gr1.iloc[team,1]} has been exculded')
+        else:
+            mygr1 = mygr1.append(gr1.iloc[team,0])
+
     return(mygr1, mygr2, mygr3, mygr4)
 
 # This function extracts the info for the selected team
