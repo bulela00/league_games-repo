@@ -54,6 +54,23 @@ def same_loc(team_location, gr1, gr2, gr3, gr4):
         else:
             mygr1 = mygr1.append(gr1.iloc[team,0])
 
+    for team in gr2:
+        if gr2.iloc[team,1] == team_location:
+            print(f'{gr2.iloc[team,1]} has been exculded')
+        else:
+            mygr2 = mygr2.append(gr2.iloc[team,0])
+
+    for team in gr3:
+        if gr3.iloc[team,1] == team_location:
+            print(f'{gr3.iloc[team,1]} has been exculded')
+        else:
+            mygr3 = mygr3.append(gr3.iloc[team,0])
+        
+    for team in gr4:
+        if gr4.iloc[team,1] == team_location:
+            print(f'{gr4.iloc[team,1]} has been exculded')
+        else:
+            mygr4 = mygr4.append(gr1.iloc[team,0])
     return(mygr1, mygr2, mygr3, mygr4)
 
 # This function extracts the info for the selected team
