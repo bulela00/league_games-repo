@@ -29,9 +29,10 @@ def league_team():
 
 # This function splits the league teams into four groups based on the team points
 def league_groups(df): 
+    contnents =""
     with open('teams.txt', 'r+', encoding='utf-8-sig') as file: 
         for line in file:
-          pass   
+          contents = contents + line   
 
     # sort teams based on points 
     # df is the teams_list 
@@ -81,5 +82,7 @@ def team_info(team):
     team_location = team[1]
     team_group = team[2]
     return (team_name, team_location, team_group)
+
+# This function randomly selects the selcted teams opponents 
 
 
