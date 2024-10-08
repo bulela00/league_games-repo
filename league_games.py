@@ -2,6 +2,7 @@
 
 #=======importing libraries=======
 import pandas as pd 
+from numpy import random
 
 #=======Functions=======
 # This function recieves the team information for the teams in the leagues 
@@ -43,6 +44,16 @@ def league_groups(df):
     gr3 = df.iloc[18:26,:]
     gr4 = df.iloc[27:35,:]
     return(df,gr1, gr2, gr3, gr4) 
+
+# This function selects a random team from the specified group
+def team_selection(df, grp):
+    # random team no selection
+    len(grp)
+    x = random.randint(len-1)
+    team = grp[x]
+
+    return(team)
+
 
 # This function identifies teams in the same location and excludes them for the team
 def same_loc(team_location, gr1, gr2, gr3, gr4): 
@@ -86,3 +97,12 @@ def team_info(team):
 # This function randomly selects the selcted teams opponents 
 
 
+
+
+# Input the teams in the league 
+league_team()    #Input team in the league
+(team_df, pot1, pot2, pot3, pot4) = league_groups()    # split teams in 4 pots 
+selected_team = team_selection(team_df, pot1)    # Select a team to find the opposition for
+(steam_name, steam_location, steam_group) = team_info(selected_team)    # Extract innfo on partner
+(my_pot1, my_pot2, my_pot3, my_pot4) = same_loc(steam_location, pot1, pot2, pot3, pot4)    # define options to be opposition
+  
