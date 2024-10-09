@@ -46,13 +46,14 @@ def league_groups(df):
     return(df,gr1, gr2, gr3, gr4) 
 
 # This function selects a random team from the specified group
-def team_selection(df, grp):
+def team_selection(grp):
     # random team no selection
     len(grp)
     x = random.randint(len-1)
     team = grp[x]
+    del grp['team']
 
-    return(team)
+    return(team, grp)
 
 
 # This function identifies teams in the same location and excludes them for the team
@@ -102,7 +103,8 @@ def team_info(team):
 # Input the teams in the league 
 league_team()    #Input team in the league
 (team_df, pot1, pot2, pot3, pot4) = league_groups()    # split teams in 4 pots 
-selected_team = team_selection(team_df, pot1)    # Select a team to find the opposition for
+(selected_team, new_pot1) = team_selection( pot1)    # Select a team to find the opposition for
 (steam_name, steam_location, steam_group) = team_info(selected_team)    # Extract innfo on partner
 (my_pot1, my_pot2, my_pot3, my_pot4) = same_loc(steam_location, pot1, pot2, pot3, pot4)    # define options to be opposition
-  
+(pot1team1, my_pot1) = team_selection(my_pot1)
+(pot1team2, my_pot1) = team_selection(my_pot1)
