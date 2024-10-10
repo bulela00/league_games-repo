@@ -107,4 +107,10 @@ league_team()    #Input team in the league
 (steam_name, steam_location, steam_group) = team_info(selected_team)    # Extract innfo on partner
 (my_pot1, my_pot2, my_pot3, my_pot4) = same_loc(steam_location, pot1, pot2, pot3, pot4)    # define options to be opposition
 (pot1team1, my_pot1) = team_selection(my_pot1)
-(pot1team2, my_pot1) = team_selection(my_pot1)
+(pot1team2, my_pot1) = team_selection(my_pot1)  
+(pot2team1, my_pot2) = team_selection(my_pot2)
+(pot2team2, my_pot2) = team_selection(my_pot2) 
+(pot3team1, my_pot3) = team_selection(my_pot3)
+(pot3team2, my_pot3) = team_selection(my_pot3)  
+(pot4team1, my_pot4) = team_selection(my_pot4)
+(pot4team2, my_pot4) = team_selection(my_pot4)  
