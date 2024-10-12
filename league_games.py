@@ -106,6 +106,8 @@ league_team()    #Input team in the league
 (selected_team, new_pot1) = team_selection( pot1)    # Select a team to find the opposition for
 (steam_name, steam_location, steam_group) = team_info(selected_team)    # Extract innfo on partner
 (my_pot1, my_pot2, my_pot3, my_pot4) = same_loc(steam_location, pot1, pot2, pot3, pot4)    # define options to be opposition
+my_options = [my_pot1, my_pot2, my_pot3, my_pot4]
+# Code for a singl team
 (pot1team1, my_pot1) = team_selection(my_pot1)
 (pot1team2, my_pot1) = team_selection(my_pot1)  
 (pot2team1, my_pot2) = team_selection(my_pot2)
