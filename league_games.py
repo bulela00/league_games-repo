@@ -8,21 +8,24 @@ from numpy import random
 # This function recieves the team information for the teams in the leagues 
 def league_team(): 
     # confirmation of no. of teams 
-    check = input("How many teams are in the league?")
+    check = int(input("How many teams are in the league? "))
     if check == 36: 
-        print('Please enter the team information as prompted')
-        for x in 36:
+        teams = ""
+        print('Please enter the team information as prompted:')
+        for x in range(1,37):
+            print(f'Team {x}:')
             # accepts teams' name
-            team_name = input("Enter the team name")
-            # teams' points 
-            team_points = input("Enter the team points")
+            team_name = input(f"Enter the team name: ")
             # teams' location 
-            team_location = input("Enter team location")
-            with open('teams.txt', 'a+', encoding='utf-8-sig') as team_info:
-                info = 0
-                for line in team_info:
-                    info +=1 
-
+            team_location = input("Enter team location: ")
+            # teams' points 
+            team_points = input("Enter the team points: ")
+            team_info = ",".join([team_name,team_location,team_points])
+            teams = teams + team_info + '\n'
+            
+        with open('teams.txt', 'w+', encoding='utf-8-sig') as file:
+            file.write(teams)
+   
     else:
         print("Invalid number of teams. ")
 
