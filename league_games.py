@@ -32,13 +32,29 @@ def league_team():
     return 
 
 # This function splits the league teams into four groups based on the team points
-def league_groups(df): 
-    contnents =""
+def league_groups(): 
+
+    team = []
+    team_location = []
+    team_points = []
+    # Read league teams 
     with open('teams.txt', 'r+', encoding='utf-8-sig') as file: 
         for line in file:
-          contents = contents + line   
+            temp = line.strip()
+            temp = temp.split(",")    # Split the line of team info 
+            team.append(temp[0])    # Add the team name to the team list
+            team_location.append(temp[1])    # Add the team location into the locations list
+            team_points.append(temp[2])    # Add the teams points into the team points list 
 
-    # sort teams based on points 
+
+    # Create a dictionary of team info lists
+    team_info = {'Team': team,
+                 'Team_location': team_location, 
+                 'Team_points': team_points}
+    
+    df = pd.DataFrame(team_info)    # Convert the team info into a DataFrame
+ 
+    '''# sort teams based on points 
     # df is the teams_list 
     df.sort_values('points', ascending=False) 
     # split the sorted list into four groups 
@@ -46,7 +62,9 @@ def league_groups(df):
     gr2 = df.iloc[9:17,:]
     gr3 = df.iloc[18:26,:]
     gr4 = df.iloc[27:35,:]
-    return(df,gr1, gr2, gr3, gr4) 
+    print(gr1)
+    # return(df,gr1, gr2, gr3, gr4) '''
+
 
 # This function selects a random team from the specified group
 def team_selection(grp):
@@ -117,10 +135,11 @@ def team_draw(my_groups, team):
 
 
 # Input the teams in the league 
-league_team()    #Input team in the league
-(team_df, pot1, pot2, pot3, pot4) = league_groups()    # split teams in 4 pots 
-(selected_team, new_pot1) = team_selection( pot1)    # Select a team to find the opposition for
+#league_team()    #Input team in the league
+#(team_df, pot1, pot2, pot3, pot4) = league_groups()    # split teams in 4 pots 
+league_groups()
+'''(selected_team, new_pot1) = team_selection( pot1)    # Select a team to find the opposition for
 (steam_name, steam_location, steam_group) = team_info(selected_team)    # Extract innfo on partner
 (my_pot1, my_pot2, my_pot3, my_pot4) = same_loc(steam_location, pot1, pot2, pot3, pot4)    # define options to be opposition
 my_options = [my_pot1, my_pot2, my_pot3, my_pot4]
-(opposition_teams) = team_draw(my_options, selected_team)
+(opposition_teams) = team_draw(my_options, selected_team)'''
