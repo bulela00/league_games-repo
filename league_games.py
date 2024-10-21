@@ -66,6 +66,11 @@ def league_groups(df):
     gr2 = df.iloc[9:17,:]    # group 2
     gr3 = df.iloc[18:26,:]    # group 3
     gr4 = df.iloc[27:35,:]    # group 4
+
+    print('Group 1' + gr1 + '\n')
+    print('Group 2' + gr2 + '\n')
+    print('Group 3' + gr3 + '\n')
+    print('Group 4' + gr4 + '\n')
  
     return(df,gr1, gr2, gr3, gr4)
 
