@@ -52,7 +52,8 @@ def read_teams():
                  'Team_points': team_points}
     
     df = pd.DataFrame(team_info)    # Convert the team info into a DataFrame
-    league_groups(df)
+    return(df)
+
 
 # This function splits the teams in the league into 4 groups 
 def league_groups(df):
@@ -143,10 +144,10 @@ def team_draw(my_groups, team):
 
 
 
-# Input the teams in the league 
-#league_team()    #Input team in the league
-#(team_df, pot1, pot2, pot3, pot4) = league_groups()    # split teams in 4 pots 
-read_teams()
+# League teams group stage draw for opposition
+league_team()    #Input team in the league
+(teams_df) = read_teams()    # Put the team information into a DataFrame 
+(teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
 '''(selected_team, new_pot1) = team_selection( pot1)    # Select a team to find the opposition for
 (steam_name, steam_location, steam_group) = team_info(selected_team)    # Extract innfo on partner
 (my_pot1, my_pot2, my_pot3, my_pot4) = same_loc(steam_location, pot1, pot2, pot3, pot4)    # define options to be opposition
