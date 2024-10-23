@@ -117,14 +117,14 @@ def same_loc(team_location, gr1, gr2, gr3, gr4):
             mygr4 = mygr4.append(gr1.iloc[team,0])
     return(mygr1, mygr2, mygr3, mygr4)
 
-# This function extracts the info for the selected team
+'''# This function extracts the info for the selected team
 def team_info(team):
     team = team.strip()
     team = team.split(",") 
     team_name = team[0]
     team_location = team[1]
     team_group = team[2]
-    return (team_name, team_location, team_group)
+    return (team_name, team_location, team_group)'''
 
 # This function randomly selects the selcted teams opponents 
 
@@ -148,8 +148,4 @@ def team_draw(my_groups, team):
 league_team()    #Input team in the league
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
 (teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
-'''(selected_team, new_pot1) = team_selection( pot1)    # Select a team to find the opposition for
-(steam_name, steam_location, steam_group) = team_info(selected_team)    # Extract innfo on partner
-(my_pot1, my_pot2, my_pot3, my_pot4) = same_loc(steam_location, pot1, pot2, pot3, pot4)    # define options to be opposition
-my_options = [my_pot1, my_pot2, my_pot3, my_pot4]
-(opposition_teams) = team_draw(my_options, selected_team)'''
+
