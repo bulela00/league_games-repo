@@ -81,8 +81,8 @@ def team_selection(grp):
     # random team no selection
     len(grp)
     x = random.randint(len-1)
-    team = grp[x]
-    del grp['team']
+    team = grp.iloc[x,:]
+    del grp[team]
 
     return(team, grp)
 
@@ -130,7 +130,10 @@ def team_draw(my_groups, team):
 
 
 # League teams group stage draw for opposition
-league_team()    #Input team in the league
+#league_team()    #Input team in the league
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
-(teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
-
+#(teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
+print(teams_df)
+i = random.randint(35)
+selected = teams_df.iloc[i,:]
+print(selected.iloc[0])
