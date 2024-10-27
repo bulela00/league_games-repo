@@ -97,10 +97,9 @@ def same_loc(team_location, gr1, gr2, gr3, gr4):
         for team in grp:
             if grp.loc[team,'Team_location'] == team_location:
                 print(f'{grp.loc[team,'Team']} has been excluded')
-            else:
-                mygrps = mygrps.append(grp.loc[team,'Team'])
+                del grp[grp.loc[team,:]]
 
-    return(mygrps)
+    return(gr1,gr2,gr3,gr4)
 
 '''# This function extracts the info for the selected team
 def team_info(team):
