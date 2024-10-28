@@ -101,14 +101,6 @@ def same_loc(team_location, gr1, gr2, gr3, gr4):
 
     return(gr1,gr2,gr3,gr4)
 
-'''# This function extracts the info for the selected team
-def team_info(team):
-    team = team.strip()
-    team = team.split(",") 
-    team_name = team[0]
-    team_location = team[1]
-    team_group = team[2]
-    return (team_name, team_location, team_group)'''
 
 # This function randomly selects the selcted teams opponents 
 
@@ -123,9 +115,6 @@ def team_draw(my_groups, team):
         del grp['team']
 
     return (teams)
-
-
-
 
 
 # League teams group stage draw for opposition
