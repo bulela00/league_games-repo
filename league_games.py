@@ -103,18 +103,22 @@ def same_loc(team_location, gr1, gr2, gr3, gr4):
 
 
 # This function randomly selects the selcted teams opponents 
-
-
-def team_draw(my_groups, team):
-    teams = []
+def team_draw(gr1,gr2,gr3,gr4, team):
+    opponents = []
+    my_grps = (gr1,gr2,gr3,gr4)
     # random team no selection
-    for grp in my_groups:
+    for grp in my_grps:
         len(grp)
         x = random.randint(len-1)
-        team = grp[x]
-        del grp['team']
-
-    return (teams)
+        team1 = grp[x]
+        del grp[team]
+        opponents.append(team1)
+        y = random.randint(len-2)
+        team2 = grp[y]
+        del grp[team]
+        opponents.append(team2)
+    
+    return (opponents)
 
 
 # League teams group stage draw for opposition
