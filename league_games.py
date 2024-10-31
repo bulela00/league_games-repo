@@ -124,7 +124,10 @@ def team_draw(gr1,gr2,gr3,gr4, team):
 # League teams group stage draw for opposition
 #league_team()    #Input team in the league
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
-#(teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
+(teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
+(selected_team,my_pot1) = team_selection(pot1)
+(pot1,pot2,pot3,pot4) = same_loc(selected_team[1], pot1, pot2, pot3, pot4)
+(team_opps) = team_draw(pot1,pot2,pot3,pot4, selected_team)
 print(teams_df)
 i = random.randint(35)
 selected = teams_df.iloc[i,:]
