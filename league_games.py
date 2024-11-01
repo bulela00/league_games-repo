@@ -57,6 +57,7 @@ def read_teams():
 
 # This function splits the teams in the league into 4 groups 
 def league_groups(df):
+    print(df.dtypes)
     # df is the teams_list 
     df['Team_points'] = pd.to_numeric(df['Team_points'])
     # sort teams by team points 
@@ -125,10 +126,11 @@ def team_draw(gr1,gr2,gr3,gr4, team):
 #league_team()    #Input team in the league
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
 (teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
-(selected_team,my_pot1) = team_selection(pot1)
-(pot1,pot2,pot3,pot4) = same_loc(selected_team[1], pot1, pot2, pot3, pot4)
-(team_opps) = team_draw(pot1,pot2,pot3,pot4, selected_team)
-print(teams_df)
-i = random.randint(35)
-selected = teams_df.iloc[i,:]
-print(selected.iloc[0])
+pots = [pot1, pot2, pot3, pot4]
+for pot in pots:
+    current_pot = pot
+    for team_in_pot  in pot:
+        (selected_team,my_potx) = team_selection(current_pot)
+        (mypot1,mypot2,mypot3,mypot4) = same_loc(selected_team[1], pot1, pot2, pot3, pot4)
+        (team_opps) = team_draw(mypot1,mypot2,mypot3,mypot4, selected_team)
+
