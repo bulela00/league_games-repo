@@ -43,8 +43,9 @@ def read_teams():
             temp = temp.split(",")    # Split the line of team info 
             team.append(temp[0])    # Add the team name to the team list
             team_location.append(temp[1])    # Add the team location into the locations list
-            team_points.append(temp[2])    # Add the teams points into the team points list 
 
+            points = int(temp[2])
+            team_points.append(points)    # Add the teams points into the team points list 
 
     # Create a dictionary of team info lists
     team_info = {'Team': team,
@@ -52,6 +53,7 @@ def read_teams():
                  'Team_points': team_points}
     
     df = pd.DataFrame(team_info)    # Convert the team info into a DataFrame
+    print(df.dtypes)
     return(df)
 
 
@@ -126,11 +128,11 @@ def team_draw(gr1,gr2,gr3,gr4, team):
 #league_team()    #Input team in the league
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
 (teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
-pots = [pot1, pot2, pot3, pot4]
+'''pots = [pot1, pot2, pot3, pot4]
 for pot in pots:
     current_pot = pot
     for team_in_pot  in pot:
         (selected_team,my_potx) = team_selection(current_pot)
         (mypot1,mypot2,mypot3,mypot4) = same_loc(selected_team[1], pot1, pot2, pot3, pot4)
-        (team_opps) = team_draw(mypot1,mypot2,mypot3,mypot4, selected_team)
+        (team_opps) = team_draw(mypot1,mypot2,mypot3,mypot4, selected_team)'''
 
