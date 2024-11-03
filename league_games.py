@@ -44,8 +44,13 @@ def read_teams():
             team.append(temp[0])    # Add the team name to the team list
             team_location.append(temp[1])    # Add the team location into the locations list
 
-            points = int(temp[2])
-            team_points.append(points)    # Add the teams points into the team points list 
+            # Convert team points to an integer and handle any errors
+            try:
+                points = int(temp[2])
+                team_points.append(points)  # Add the teams points into the team points list
+            except ValueError:
+                print(f"Warning: Invalid team points '{temp[2]}' for team '{temp[0]}'. Defaulting to 0.")
+                team_points.append(0)  # Add a default value if conversion fails 
 
     # Create a dictionary of team info lists
     team_info = {'Team': team,
