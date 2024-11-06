@@ -54,6 +54,15 @@ def read_teams():
     print(df.dtypes)
     return(df)
 
+# This function produces a dataframe for the away and home games 
+def home_away(gr1, gr2, gr3, gr4):
+    games_df = (gr1,gr2,gr3,gr4)
+    teams = []
+    for grp in games_df:
+        for team in grp:
+            away_team = "_".join([team, 'away'])
+            teams.append(away_team)
+    return (games_df)
 
 # This function splits the teams in the league into 4 groups 
 def league_groups(df):
