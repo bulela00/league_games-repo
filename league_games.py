@@ -118,12 +118,12 @@ def team_draw(gr1,gr2,gr3,gr4, team):
     my_grps = (gr1,gr2,gr3,gr4)
     # random team no selection
     for grp in my_grps:
-        len(grp)
-        x = random.randint(len-1)
-        team1 = grp[x]
-        del grp[team]
-        opponents.append(team1)
-        y = random.randint(len-2)
+        len(grp)    # determine the number of teams in the group
+        x = random.randint(len-1)   # Select a random number within the defined range
+        team1 = grp[x]    # Select the random team that corresponds to the random number 
+        del grp[team]    # Delete the selected team from the group
+        opponents.append(team1)   # Add the selected team into the list of opposition for the selected team
+        y = random.randint(len-2)    # Select a second team from the group. Each team must play 2 teams from each group
         team2 = grp[y]
         del grp[team]
         opponents.append(team2)
