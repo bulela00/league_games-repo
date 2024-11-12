@@ -58,6 +58,15 @@ def read_teams():
 def home_away(gr1, gr2, gr3, gr4):
     games_df = (gr1,gr2,gr3,gr4)
     teams = []
+    home_games = []
+    away_games = []
+
+    for team in gr1:
+        temp = gr1.iloc[team,0]
+        home_games.append(team)
+
+
+
     for grp in games_df:
         for team in grp:
             away_team = "_".join([team, 'away'])
