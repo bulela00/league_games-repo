@@ -141,14 +141,7 @@ def team_draw(gr1,gr2,gr3,gr4, team):
 
 
 # League teams group stage draw for opposition
-#league_team()    #Input team in the league
+league_team()    #Input team in the league
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
 (teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
-'''pots = [pot1, pot2, pot3, pot4]
-for pot in pots:
-    current_pot = pot
-    for team_in_pot  in pot:
-        (selected_team,my_potx) = team_selection(current_pot)
-        (mypot1,mypot2,mypot3,mypot4) = same_loc(selected_team[1], pot1, pot2, pot3, pot4)
-        (team_opps) = team_draw(mypot1,mypot2,mypot3,mypot4, selected_team)'''
 
