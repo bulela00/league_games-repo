@@ -78,7 +78,7 @@ def league_groups(df):
     print(df.dtypes)
     # df is the teams_list 
     df['Team_points'] = pd.to_numeric(df['Team_points'])
-    # sort teams by team points 
+    # sort teams by     team points 
     df = df.sort_values('Team_points') 
 
     # split the sorted list into four groups 
@@ -117,6 +117,11 @@ def same_loc(team_location, gr1, gr2, gr3, gr4):
             if grp.loc[team,'Team_location'] == team_location:
                 print(f'{grp.loc[team,'Team']} has been excluded')
                 del grp[grp.loc[team,:]]
+
+    gr1 = gr1.iloc[0,:]
+    gr2 = gr2.iloc[0,:]
+    gr3 = gr3.iloc[0,:]
+    gr4 = gr4.iloc[0,:]
 
     return(gr1,gr2,gr3,gr4)
 
