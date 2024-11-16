@@ -146,7 +146,9 @@ def team_draw(gr1,gr2,gr3,gr4, team):
 
 
 # League teams group stage draw for opposition
-league_team()    #Input team in the league
+league_team()    # Input team in the league
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
 (teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
-
+   # Select a random team from pot 1 
+   # Search all pots to exculde any teams from the same location 
+   # Select a team from each pot for home opposition and another for away opposition 
