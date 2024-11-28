@@ -1,4 +1,11 @@
 # League opponents draw 
+# This project is used to determine the schedule of a sports tournament 
+# Each team must face 8 unique opponents. 
+# The 8 opponents will be 2 teams from each group 
+
+# Order of operation 
+# The qualifying teams information must be input by the user
+# The input data must then be sorted by team points and split into groups 
 
 #=======importing libraries=======
 import pandas as pd 
@@ -14,7 +21,7 @@ def league_team():
         print('Please enter the team information as prompted:')
         for x in range(1,37):
             print(f'Team {x}:')
-            # accepts teams' name
+            # accepts teams' name  
             team_name = input(f"Enter the team name: ")
             # teams' location 
             team_location = input("Enter team location: ")
