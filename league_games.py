@@ -15,7 +15,7 @@ from numpy import random
 # This function recieves the team information for the teams in the leagues 
 def league_team(): 
     # confirmation of no. of teams 
-    check = int(input("How many teams are in the league? "))
+    check = int(input("How many teams are in the league?"))
     if check == 36: 
         teams = ""
         print('Please enter the team information as prompted:')
@@ -80,24 +80,25 @@ def home_away(gr1, gr2, gr3, gr4):
             teams.append(away_team)
     return (games_df)
 
+
 # This function splits the teams in the league into 4 groups 
 def league_groups(df):
     print(df.dtypes)
     # df is the teams_list 
     df['Team_points'] = pd.to_numeric(df['Team_points'])
     # sort teams by     team points 
-    df = df.sort_values('Team_points') 
+    df = df.sort_values('Team_points').reset_index(drop=True) 
 
     # split the sorted list into four groups 
-    gr1 = df.iloc[0:8,:]    # group 1
-    gr2 = df.iloc[9:17,:]    # group 2
-    gr3 = df.iloc[18:26,:]    # group 3
-    gr4 = df.iloc[27:35,:]    # group 4
+    gr1 = df.iloc[0:9,:]    # group 1
+    gr2 = df.iloc[9:18,:]    # group 2
+    gr3 = df.iloc[18:27,:]    # group 3
+    gr4 = df.iloc[27:36,:]    # group 4
 
-    print('Group 1' + gr1 + '\n')
-    print('Group 2' + gr2 + '\n')
-    print('Group 3' + gr3 + '\n')
-    print('Group 4' + gr4 + '\n')
+    print('Group 1:\n' , gr1 , '\n')
+    print('Group 2:\n' , gr2 , '\n')
+    print('Group 3:\n' , gr3 , '\n')
+    print('Group 4:\n' , gr4 , '\n')
  
     return(df,gr1, gr2, gr3, gr4)
 
