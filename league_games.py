@@ -15,7 +15,7 @@ from numpy import random
 # This function recieves the team information for the teams in the leagues 
 def league_team(): 
     # confirmation of no. of teams 
-    check = int(input("How many teams are in the league?"))
+    check = int(input("How many teams are in the league? "))
     if check == 36: 
         teams = ""
         print('Please enter the team information as prompted:')
@@ -26,7 +26,7 @@ def league_team():
             # teams' location 
             team_location = input("Enter team location: ")
             # teams' points 
-            team_points = int(input("Enter the team points: "))
+            team_points = input("Enter the team points: ")
             team_info = ",".join([team_name,team_location,team_points])
             teams = teams + team_info + '\n'
             
@@ -58,27 +58,11 @@ def read_teams():
                  'Team_points': team_points}
     
     df = pd.DataFrame(team_info)    # Convert the team info into a DataFrame
+
+    matches = {} # creating a dictionary to save each teams opposition
+
     print(df.dtypes)
     return(df)
-
-# This function produces a dataframe for the away and home games 
-def home_away(gr1, gr2, gr3, gr4):
-    games_df = (gr1,gr2,gr3,gr4)
-    teams = []
-    home_games = []
-    away_games = []
-
-    for team in gr1:
-        temp = gr1.iloc[team,0]
-        home_games.append(team)
-
-
-
-    for grp in games_df:
-        for team in grp:
-            away_team = "_".join([team, 'away'])
-            teams.append(away_team)
-    return (games_df)
 
 
 # This function splits the teams in the league into 4 groups 
@@ -101,6 +85,20 @@ def league_groups(df):
     print('Group 4:\n' , gr4 , '\n')
  
     return(df,gr1, gr2, gr3, gr4)
+
+
+# This function produces a dataframe for the away and home games 
+def home_away(gr1, gr2, gr3, gr4):
+    home_teams = {'group1h': gr1,
+                  'group2h': gr2,
+                  'group3h': gr3,
+                  'group4h': gr4}
+    away_teams = {'group1a': gr1,
+                  'group2a': gr2,
+                  'group3a': gr3,
+                  'group4a': gr4}
+
+    return (home_teams, away_teams)
 
 
 # This function selects a random team from the specified group
@@ -152,12 +150,19 @@ def team_draw(gr1,gr2,gr3,gr4, team):
     
     return (opponents)
 
+def matchschedule(matches):
+    matches 
+
+    return matches
+
+
 
 # League teams group stage draw for opposition
-league_team()    # Input team in the league
+league_team()   # Input team in the league
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
 (teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
-(team_select, pot1) = team_selection(pot1)  # Select a random team from pot 1 
-team_location = team_select[1]
-(pot1, pot2, pot3, pot4) = same_loc(team_location, pot1, pot2, pot3, pot4)  # Search all pots to exculde any teams from the same location 
-(team_opponents) = team_draw(pot1,pot2,pot3,pot4, team_select)   # Select a team from each pot for home opposition and another for away opposition 
+(home, away) = home_away(pot1, pot2, pot3, pot4)
+#(team_select, pot1) = team_selection(pot1)  # Select a random team from pot 1 
+#team_location = team_select[1]
+#(pot1, pot2, pot3, pot4) = same_loc(team_location, pot1, pot2, pot3, pot4)  # Search all pots to exculde any teams from the same location 
+#(team_opponents) = team_draw(pot1,pot2,pot3,pot4, team_select)   # Select a team from each pot for home opposition and another for away opposition 
