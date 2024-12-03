@@ -103,11 +103,11 @@ def home_away(gr1, gr2, gr3, gr4):
 
 # This function selects a random team from the specified group
 def team_selection(grp):
-    # random team no selection
-    team = random.choice(grp.iloc[:,0])
-    grp.drop(grp[grp['Team'] == team].index, inplace=True)
+    team = random.choice(grp.iloc[:,0])    # Select a random team from the group
+    team_location = grp[grp['Team'] == team]['Team_location'].iloc[0]
+    grp.drop(grp[grp['Team'] == team].index, inplace=True)    # Remove the selected team from the group returned by the function
 
-    return(team, grp)
+    return(team, team_location, grp)
 
 
 # This function identifies teams in the same location and excludes them for the team
@@ -160,14 +160,9 @@ def matchschedule(matches):
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
 (teams_df,pot1, pot2, pot3, pot4,games) = league_groups(teams_df)    # Split teams into 4 groups by team points
 (home, away) = home_away(pot1, pot2, pot3, pot4)
-print('The home opposition\n', home.get('group1h')) # to get the list of group 1 home opposition options 
-print(pot1)
-(team_select, pot1) = team_selection(pot1)  # Select a random team from pot 1 
+(team_select, select_location, pot1) = team_selection(pot1)  # Select a random team from pot 1 
 print(team_select)
-#print(pot1[pot1['Team']==team_select])
-print('new gr1\n', pot1)
-#team_location = team_select[1]
-#(pot1, pot2, pot3, pot4) = same_loc(team_location, pot1, pot2, pot3, pot4)  # Search all pots to exculde any teams from the same location 
+#(pot1, pot2, pot3, pot4) = same_loc(select_location, pot1, pot2, pot3, pot4)  # Search all pots to exculde any teams from the same location 
 #(team_opponents) = team_draw(pot1,pot2,pot3,pot4, team_select)   # Select a team from each pot for home opposition and another for away opposition 
 
 
