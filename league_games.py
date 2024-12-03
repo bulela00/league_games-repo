@@ -10,7 +10,7 @@
 #=======importing libraries=======
 import pandas as pd 
 from numpy import random
-
+  
 #=======Functions=======
 # This function recieves the team information for the teams in the leagues 
 def league_team(): 
@@ -59,15 +59,13 @@ def read_teams():
     
     df = pd.DataFrame(team_info)    # Convert the team info into a DataFrame
 
-    matches = {} # creating a dictionary to save each teams opposition
-
     print(df.dtypes)
     return(df)
 
 
 # This function splits the teams in the league into 4 groups 
 def league_groups(df):
-    print(df.dtypes)
+
     # df is the teams_list 
     df['Team_points'] = pd.to_numeric(df['Team_points'])
     # sort teams by     team points 
@@ -83,20 +81,22 @@ def league_groups(df):
     print('Group 2:\n' , gr2 , '\n')
     print('Group 3:\n' , gr3 , '\n')
     print('Group 4:\n' , gr4 , '\n')
+
+    matches = {} # creating a dictionary to save each teams opposition
  
-    return(df,gr1, gr2, gr3, gr4)
+    return(df,gr1, gr2, gr3, gr4, matches)
 
 
 # This function produces a dataframe for the away and home games 
 def home_away(gr1, gr2, gr3, gr4):
-    home_teams = {'group1h': gr1,
-                  'group2h': gr2,
-                  'group3h': gr3,
-                  'group4h': gr4}
-    away_teams = {'group1a': gr1,
-                  'group2a': gr2,
-                  'group3a': gr3,
-                  'group4a': gr4}
+    home_teams = {'group1h': gr1.iloc[:,0].to_list(),  # Creates a list of the team names from each group
+                  'group2h': gr2.iloc[:,0].to_list(),
+                  'group3h': gr3.iloc[:,0].to_list(),
+                  'group4h': gr4.iloc[:,0].to_list()}
+    away_teams = {'group1a': gr1.iloc[:,0].to_list(),
+                  'group2a': gr2.iloc[:,0].to_list(),
+                  'group3a': gr3.iloc[:,0].to_list(),
+                  'group4a': gr4.iloc[:,0].to_list()}
 
     return (home_teams, away_teams)
 
@@ -104,10 +104,8 @@ def home_away(gr1, gr2, gr3, gr4):
 # This function selects a random team from the specified group
 def team_selection(grp):
     # random team no selection
-    len(grp)
-    x = random.randint(len-1)
-    team = grp.iloc[x,:]
-    del grp[team]
+    team = random.choice(grp.iloc[:,0])
+    grp.drop(grp[grp['Team'] == team].index, inplace=True)
 
     return(team, grp)
 
@@ -158,11 +156,20 @@ def matchschedule(matches):
 
 
 # League teams group stage draw for opposition
-league_team()   # Input team in the league
+#league_team()   # Input team in the league
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
-(teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
+(teams_df,pot1, pot2, pot3, pot4,games) = league_groups(teams_df)    # Split teams into 4 groups by team points
 (home, away) = home_away(pot1, pot2, pot3, pot4)
-#(team_select, pot1) = team_selection(pot1)  # Select a random team from pot 1 
+print('The home opposition\n', home.get('group1h')) # to get the list of group 1 home opposition options 
+print(pot1)
+(team_select, pot1) = team_selection(pot1)  # Select a random team from pot 1 
+print(team_select)
+#print(pot1[pot1['Team']==team_select])
+print('new gr1\n', pot1)
 #team_location = team_select[1]
 #(pot1, pot2, pot3, pot4) = same_loc(team_location, pot1, pot2, pot3, pot4)  # Search all pots to exculde any teams from the same location 
 #(team_opponents) = team_draw(pot1,pot2,pot3,pot4, team_select)   # Select a team from each pot for home opposition and another for away opposition 
+
+
+
+# Work out exclusions then if the team returned is one of those search for the next team 
