@@ -109,41 +109,52 @@ def team_selection(grp):
 
     return(team, team_location, grp)
 
-
+###################################################################################################################
 # This function identifies teams in the same location and excludes them for the team
 def same_loc(team_location, gr1, gr2, gr3, gr4): 
     grps = (gr1, gr2, gr3, gr4)
-    mygr1 ={}
     # identify team location
     # identify teams in that location 
-    for grp in grps:
+    gr1.loc[gr1['Team_location']==team_location,:]
+    '''for x in range(len(grp)):
+        if grp.loc['Team_location',x] == team_location:
+            print(grp.loc)
+        else:
+            print('not the same location')
+    
+    for grp in grps:    # Loops through each group
         for team in grp:
-            if grp.loc[team,'Team_location'] == team_location:
+            if team.loc['Team_location'] == team_location:
                 print(f'{grp.loc[team,'Team']} has been excluded')
-                del grp[grp.loc[team,:]]
+                del grp[grp.loc[team,:]]'''
 
     gr1 = gr1.iloc[0,:]
     gr2 = gr2.iloc[0,:]
     gr3 = gr3.iloc[0,:]
     gr4 = gr4.iloc[0,:]
 
-    return(gr1,gr2,gr3,gr4)
-
+    return(mygr1,mygr2,mygr3,mygr4)
+##########################################################################################################
 
 # This function randomly selects the selcted teams opponents 
 def team_draw(gr1,gr2,gr3,gr4, team):
+    # gr1 , gr2 ,gr3 and gr4 in this case should be lists and not a dataframe
+    gr1.iloc[:,0].to_list()
+    gr2.iloc[:,0].to_list()
+    gr3.iloc[:,0].to_list()
+    gr4.iloc[:,0].to_list()
+
+    # team is a string 
+    #del gr1[gr1.index(team)]
     opponents = []
     my_grps = (gr1,gr2,gr3,gr4)
     # random team no selection
     for grp in my_grps:
-        len(grp)    # determine the number of teams in the group
-        x = random.randint(len-1)   # Select a random number within the defined range
-        team1 = grp[x]    # Select the random team that corresponds to the random number 
-        del grp[team]    # Delete the selected team from the group
+        team1 = random.choice(grp.iloc[:,0])    # Select a random team from the group
+        #grp.remove(team1)   # Delete the selected team from the group
         opponents.append(team1)   # Add the selected team into the list of opposition for the selected team
-        y = random.randint(len-2)    # Select a second team from the group. Each team must play 2 teams from each group
-        team2 = grp[y]
-        del grp[team]
+        team2 = random.choice(grp.iloc[:,0])   # Select a second team from the group. Each team must play 2 teams from each group
+        #grp.remove(team2)
         opponents.append(team2)
     
     return (opponents)
@@ -162,6 +173,10 @@ def matchschedule(matches):
 (home, away) = home_away(pot1, pot2, pot3, pot4)
 (team_select, select_location, pot1) = team_selection(pot1)  # Select a random team from pot 1 
 print(team_select)
+print(pot1)
+print(len(pot1))
+(team_opponents) = team_draw(pot1,pot2,pot3,pot4, team_select)
+print(team_opponents)
 #(pot1, pot2, pot3, pot4) = same_loc(select_location, pot1, pot2, pot3, pot4)  # Search all pots to exculde any teams from the same location 
 #(team_opponents) = team_draw(pot1,pot2,pot3,pot4, team_select)   # Select a team from each pot for home opposition and another for away opposition 
 
