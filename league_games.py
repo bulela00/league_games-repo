@@ -164,8 +164,30 @@ def matchschedule(matches):
 
     return matches
 
+def opposition_selection(gr1,gr2,gr3,gr4):
+    # Converting the groups into a list 
+    gr1_list = gr1.iloc[:,0].to_list()   
+    gr2_list = gr2.iloc[:,0].to_list()
+    gr3_list = gr3.iloc[:,0].to_list()
+    gr4_list = gr4.iloc[:,0].to_list()
 
+    # List of groups 
+    grps = (gr1_list, gr2_list, gr3_list, gr4_list)
+    
+    # Selection must be done for each groups set of teams 
+    for grpi in grps:
+        #Selection must be done with each team in the group
+        print(grpi)
+        print('\n\n')
+        '''len_grp = 9 
+        while len_grp >= 3:
+            (team_select, select_location, grpi) = team_selection(grpi)
+            (team_opponents) = team_draw(gr1,gr2,gr3,gr4, team_select)
+            print(f'The {team_select} opponents are {team_opponents}')     
+            len_grp = len(grpi)'''
 
+    return
+ 
 # League teams group stage draw for opposition
 #league_team()   # Input team in the league
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
@@ -177,9 +199,9 @@ print(pot1)
 print(len(pot1))
 (team_opponents) = team_draw(pot1,pot2,pot3,pot4, team_select)
 print(team_opponents)
+
+opposition_selection(pot1,pot2,pot3,pot4)
 #(pot1, pot2, pot3, pot4) = same_loc(select_location, pot1, pot2, pot3, pot4)  # Search all pots to exculde any teams from the same location 
 #(team_opponents) = team_draw(pot1,pot2,pot3,pot4, team_select)   # Select a team from each pot for home opposition and another for away opposition 
-
-
 
 # Work out exclusions then if the team returned is one of those search for the next team 
