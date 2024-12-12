@@ -112,6 +112,8 @@ def team_selection(grp):
 ###################################################################################################################
 # This function identifies teams in the same location and excludes them for the team
 def same_loc(team_location, gr1, gr2, gr3, gr4): 
+    # The groups i.e. gr1, gr2, gr3 and gr4 are dataframes in this case and not lists 
+
     grps = (gr1, gr2, gr3, gr4)
     # identify team location
     # identify teams in that location 
@@ -133,10 +135,10 @@ def same_loc(team_location, gr1, gr2, gr3, gr4):
     gr3 = gr3.iloc[0,:]
     gr4 = gr4.iloc[0,:]
 
-    return(mygr1,mygr2,mygr3,mygr4)
+    return(gr1,gr2,gr3,gr4)
 ##########################################################################################################
 
-# This function randomly selects the selcted teams opponents 
+# This function randomly selects the opponents 
 def team_draw(gr1,gr2,gr3,gr4, team):
     # gr1 , gr2 ,gr3 and gr4 in this case should be lists and not a dataframe
     gr1.iloc[:,0].to_list()
