@@ -181,12 +181,13 @@ def opposition_selection(gr1,gr2,gr3,gr4):
         #Selection must be done with each team in the group
         print(grpi)
         print('\n\n')
-        '''len_grp = 9 
+        len_grp = 7 
         while len_grp >= 3:
             (team_select, select_location, grpi) = team_selection(grpi)
             (team_opponents) = team_draw(gr1,gr2,gr3,gr4, team_select)
             print(f'The {team_select} opponents are {team_opponents}')     
-            len_grp = len(grpi)'''
+            len_grp = len(grpi)
+            len_grp = len_grp-1
 
     return
  
