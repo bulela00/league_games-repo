@@ -100,8 +100,9 @@ def team_fixtures(gr1,gr2,gr3,gr4,df):
             (selected_team, selected_location) = team_selection(grp)  # Select a random team from pot 1 
             indexTeam = grp[grp['Team'] == selected_team].index
             grp.drop(indexTeam, inplace=True)     # Remove the selected team from the group returned by the function
-            print(selected_team)
-            print('rows new: ', grp.shape[0])
+            (opps)=team_draw(gr1,gr2,gr3,gr4, selected_team)
+            print(f'Selected Team: {selected_team}')
+            print(f'Opposition: {opps}')
         print('\n\n\n\n')
         
 
