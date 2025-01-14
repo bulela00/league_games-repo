@@ -150,23 +150,11 @@ def team_draw(gr1,gr2,gr3,gr4, team):
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
 (teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
 fixtures = pd.DataFrame(index=list(teams_df['Team']) ,columns=['Group','Gr1_home','Gr1_away','Gr2_home','Gr2_away','Gr3_home', 'Gr3_away','Gr4_home' ,'Gr4_away'])
-print(fixtures)
+
+
 for team in teams_df['Team']:
-    print(team)
-
-fixtures.loc['RMI','Group'] = 1
-
-print(team)
+    fixtures.loc[team,'Group'] = 1
 
 
-#team_fixtures(pot1,pot2,pot3,pot4,fixtures)
 
-#(team_opponents) = team_draw(pot1,pot2,pot3,pot4, team_select)
-#print(team_opponents)
-
-#opposition_selection(pot1,pot2,pot3,pot4)
-#(pot1, pot2, pot3, pot4) = same_loc(select_location, pot1, pot2, pot3, pot4)  # Sea  rch all pots to exculde any teams from the same location 
-#(team_opponents) = team_draw(pot1,pot2,pot3,pot4, select_team)   # Select a team from each pot for home opposition and another for away opposition 
-#print(team_opponents)
-# Work out exclusions then if the team returned is one of those search for the next team 
-
+print(fixtures)
