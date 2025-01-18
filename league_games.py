@@ -134,7 +134,7 @@ def team_draw(gr1,gr2,gr3,gr4, team):
     # random team no selection
     for grp in my_grps:
         team1 = random.choice(grp.iloc[:,0])    # Select a random team from the group
-        print(grp.iloc[:0])
+        print(grp.iloc[:,0])
         #grp.remove(team1)   # Delete the selected team from the group
         opponents.append(team1)   # Add the selected team into the list of opposition for the selected team
         team2 = random.choice(grp.iloc[:,0])   # Select a second team from the group. Each team must play 2 teams from each group
@@ -155,6 +155,7 @@ fixtures = pd.DataFrame(index=list(teams_df['Team']) ,columns=['Group','Gr1_home
 for team in teams_df['Team']:
     fixtures.loc[team,'Group'] = 1
 
+team_fixtures(pot1,pot2,pot3,pot4,teams_df )
 
 
-print(fixtures)
+  
