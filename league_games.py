@@ -152,11 +152,23 @@ def team_draw(gr1,gr2,gr3,gr4, team):
 (teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
 fixtures = pd.DataFrame(index=list(teams_df['Team']) ,columns=['Group','Gr1_home','Gr1_away','Gr2_home','Gr2_away','Gr3_home', 'Gr3_away','Gr4_home' ,'Gr4_away'])
 
+opps = team_draw(pot1,pot2,pot3,pot4, 'RMI')
+
+opps[0] = 1
+
+print(opps)
+
+#fixtures.loc['RMI'] = opps
+print(fixtures)
 
 for team in teams_df['Team']:
     fixtures.loc[team,'Group'] = 1
 
-team_fixtures(pot1,pot2,pot3,pot4,teams_df )
+print('Whats in the pot1 to begin with:')
+print(pot1)
 
+team_fixtures(pot1,pot2,pot3,pot4,teams_df )
+print('whats left after team_fixtures:')
+print(pot1)
 
   
