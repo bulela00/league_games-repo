@@ -133,14 +133,18 @@ def team_draw(gr1,gr2,gr3,gr4, team):
     opponents = []
     my_grps = (gr1,gr2,gr3,gr4)
     # random team no selection
+    i = 0
     for grp in my_grps:
         team1 = random.choice(grp.iloc[:,0])    # Select a random team from the group
+
         print(grp.iloc[:,0])
         #grp.remove(team1)   # Delete the selected team from the group
         opponents.append(team1)   # Add the selected team into the list of opposition for the selected team
         team2 = random.choice(grp.iloc[:,0])   # Select a second team from the group. Each team must play 2 teams from each group
         #grp.remove(team2)
+
         opponents.append(team2)
+  
     
     return (opponents)
 
@@ -153,19 +157,19 @@ def team_draw(gr1,gr2,gr3,gr4, team):
 fixtures = pd.DataFrame(index=list(teams_df['Team']) ,columns=['Group','Gr1_home','Gr1_away','Gr2_home','Gr2_away','Gr3_home', 'Gr3_away','Gr4_home' ,'Gr4_away'])
 
 opps = team_draw(pot1,pot2,pot3,pot4, 'RMI')
+opps.insert(0,1)
 
-opps[0] = 1
 
 print(opps)
 
-#fixtures.loc['RMI'] = opps
+fixtures.loc['RMI'] = opps
 print(fixtures)
 
 for team in teams_df['Team']:
     fixtures.loc[team,'Group'] = 1
 
 print('Whats in the pot1 to begin with:')
-print(pot1)
+print(pot1) 
 
 team_fixtures(pot1,pot2,pot3,pot4,teams_df )
 print('whats left after team_fixtures:')
