@@ -70,6 +70,7 @@ def league_groups(df):
     df['Team_points'] = pd.to_numeric(df['Team_points'])
     # sort teams by     team points 
     df = df.sort_values(by='Team_points', ascending=False).reset_index(drop=True) 
+    df['Group'] = df['Team_points']
 
     # split the sorted list into four groups 
     gr1 = df.iloc[0:9,:].copy()    # group 1
@@ -77,13 +78,18 @@ def league_groups(df):
     gr3 = df.iloc[18:27,:].copy()    # group 3
     gr4 = df.iloc[27:36,:].copy()    # group 4
 
+    # Adding the group numbers to the dataframe 
+    df.iloc[0:9,-1] = 1
+    df.iloc[9:18,-1] = 2
+    df.iloc[18:27,-1] = 3
+    df.iloc[27:36,-1] = 4
+    
     print('Group 1:\n' , gr1 , '\n')
     print('Group 2:\n' , gr2 , '\n')
     print('Group 3:\n' , gr3 , '\n')
     print('Group 4:\n' , gr4 , '\n')
  
     return(df,gr1, gr2, gr3, gr4)
-
 
 
 # This function selects a random team from the specified group
@@ -141,7 +147,7 @@ def team_draw(gr1,gr2,gr3,gr4, team):
         #grp.remove(team1)   # Delete the selected team from the group
         opponents.append(team1)   # Add the selected team into the list of opposition for the selected team
         team2 = random.choice(grp.iloc[:,0])   # Select a second team from the group. Each team must play 2 teams from each group
-        #grp.remove(team2)
+        #grp.remove(team2)  
 
         opponents.append(team2)
   
@@ -154,8 +160,13 @@ def team_draw(gr1,gr2,gr3,gr4, team):
 #league_team()   # Input team in the league
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
 (teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
-fixtures = pd.DataFrame(index=list(teams_df['Team']) ,columns=['Group','Gr1_home','Gr1_away','Gr2_home','Gr2_away','Gr3_home', 'Gr3_away','Gr4_home' ,'Gr4_away'])
 
+fixtures = pd.DataFrame(index=list(teams_df['Team']) ,columns=['Group','Gr1_home','Gr1_away','Gr2_home','Gr2_away','Gr3_home', 'Gr3_away','Gr4_home' ,'Gr4_away'])
+for i in teams_df['Team']:
+    k = teams_df[teams_df['Team'] == i].index
+    fixtures.loc[i,'Group'] = teams_df.iloc[k[0],-1]
+
+print(fixtures)
 opps = team_draw(pot1,pot2,pot3,pot4, 'RMI')
 opps.insert(0,1)
 
@@ -165,14 +176,6 @@ print(opps)
 fixtures.loc['RMI'] = opps
 print(fixtures)
 
-for team in teams_df['Team']:
-    fixtures.loc[team,'Group'] = 1
-
-print('Whats in the pot1 to begin with:')
-print(pot1) 
 
 team_fixtures(pot1,pot2,pot3,pot4,teams_df )
-print('whats left after team_fixtures:')
-print(pot1)
 
-  
