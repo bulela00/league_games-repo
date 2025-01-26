@@ -59,7 +59,7 @@ def read_teams():
     
     df = pd.DataFrame(team_info)    # Convert the team info into a DataFrame
 
-    print(df.dtypes)
+    #print(df.dtypes)  # Printing the data types 
     return(df)
 
 
@@ -84,10 +84,11 @@ def league_groups(df):
     df.iloc[18:27,-1] = 3
     df.iloc[27:36,-1] = 4
     
-    print('Group 1:\n' , gr1 , '\n')
+    # Printing the groups
+    '''print('Group 1:\n' , gr1 , '\n')
     print('Group 2:\n' , gr2 , '\n')
     print('Group 3:\n' , gr3 , '\n')
-    print('Group 4:\n' , gr4 , '\n')
+    print('Group 4:\n' , gr4 , '\n')'''
  
     return(df,gr1, gr2, gr3, gr4)
 
@@ -107,10 +108,10 @@ def team_fixtures(gr1,gr2,gr3,gr4,df):
             indexTeam = grp[grp['Team'] == selected_team].index
             grp.drop(indexTeam, inplace=True)     # Remove the selected team from the group returned by the function
             # (opps)=team_draw(gr1,gr2,gr3,gr4, selected_team)
-            print(f'Selected Team: {selected_team}')
+            #print(f'Selected Team: {selected_team}')
             #print(f'Opposition: {opps}')
-        print('\n\n\n\n')
-        print(f'Remaining group: {grp}')
+        #print('\n\n\n\n')
+        #print(f'Remaining group: {grp}')
         
 
            
@@ -143,7 +144,7 @@ def team_draw(gr1,gr2,gr3,gr4, team):
     for grp in my_grps:
         team1 = random.choice(grp.iloc[:,0])    # Select a random team from the group
 
-        print(grp.iloc[:,0])
+        #print(grp.iloc[:,0])
         #grp.remove(team1)   # Delete the selected team from the group
         opponents.append(team1)   # Add the selected team into the list of opposition for the selected team
         team2 = random.choice(grp.iloc[:,0])   # Select a second team from the group. Each team must play 2 teams from each group
@@ -166,16 +167,52 @@ for i in teams_df['Team']:
     k = teams_df[teams_df['Team'] == i].index
     fixtures.loc[i,'Group'] = teams_df.iloc[k[0],-1]
 
-print(fixtures)
+#print(fixtures)
 opps = team_draw(pot1,pot2,pot3,pot4, 'RMI')
 opps.insert(0,1)
 
 
-print(opps)
+#print(opps)
 
 fixtures.loc['RMI'] = opps
+#print(fixtures)
+
+
+#team_fixtures(pot1,pot2,pot3,pot4,teams_df )
+
 print(fixtures)
 
+# Allocating each group to a home and away list 
+grp1h = pot1.iloc[:,0].copy().to_list()
+grp1a = pot1.iloc[:,0].copy().to_list()
+grp2h = pot2.iloc[:,0].copy().to_list()
+grp2a = pot2.iloc[:,0].copy().to_list()
+grp3h = pot3.iloc[:,0].copy().to_list()
+grp3a = pot3.iloc[:,0].copy().to_list()
+grp4h = pot4.iloc[:,0].copy().to_list()
+grp4a = pot4.iloc[:,0].copy().to_list()
 
-team_fixtures(pot1,pot2,pot3,pot4,teams_df )
+x = fixtures.loc['RMI','Gr2_home']
+print(x)
+fixtures.loc[x,'Gr1_away'] = 'RMI'
 
+print(fixtures)
+'''
+# team is a string 
+#del gr1[gr1.index(team)]
+opponents = []
+my_grps = (gr1,gr2,gr3,gr4)
+# random team no selection
+i = 0
+for grp in my_grps:
+    team1 = random.choice(grp.iloc[:,0])    # Select a random team from the group
+
+    #print(grp.iloc[:,0])
+    #grp.remove(team1)   # Delete the selected team from the group
+    opponents.append(team1)   # Add the selected team into the list of opposition for the selected team
+    team2 = random.choice(grp.iloc[:,0])   # Select a second team from the group. Each team must play 2 teams from each group
+    #grp.remove(team2)  
+
+    opponents.append(team2)
+
+'''
