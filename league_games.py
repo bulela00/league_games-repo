@@ -196,6 +196,15 @@ x = fixtures.loc['RMI','Gr2_home']
 print(x)
 fixtures.loc[x,'Gr1_away'] = 'RMI'
 
+matchups = fixtures.columns.to_list()  # A list of the columns names of the fixtures dataframe
+mathcups = matchups.remove('Group')   # Creating a list of the matchups of the fixtures  
+
+for team in teams_df['Team']:
+    for col in matchups: 
+        print(fixtures.loc[team, col])
+
+
+
 print(fixtures)
 '''
 # team is a string 
