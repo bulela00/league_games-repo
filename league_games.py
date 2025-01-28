@@ -9,6 +9,7 @@
 
 #=======importing libraries=======
 import pandas as pd 
+import numpy as np
 from numpy import random
   
 #=======Functions=======
@@ -183,14 +184,14 @@ fixtures.loc['RMI'] = opps
 print(fixtures)
 
 # Allocating each group to a home and away list 
-grp1h = pot1.iloc[:,0].copy().to_list()
-grp1a = pot1.iloc[:,0].copy().to_list()
-grp2h = pot2.iloc[:,0].copy().to_list()
-grp2a = pot2.iloc[:,0].copy().to_list()
-grp3h = pot3.iloc[:,0].copy().to_list()
-grp3a = pot3.iloc[:,0].copy().to_list()
-grp4h = pot4.iloc[:,0].copy().to_list()
-grp4a = pot4.iloc[:,0].copy().to_list()
+gr1_h = pot1.iloc[:,0].copy().to_list()
+gr1_a = pot1.iloc[:,0].copy().to_list()
+gr2_h = pot2.iloc[:,0].copy().to_list()
+gr2_a = pot2.iloc[:,0].copy().to_list()
+gr3_h = pot3.iloc[:,0].copy().to_list()
+gr3_a = pot3.iloc[:,0].copy().to_list()
+gr4_h = pot4.iloc[:,0].copy().to_list()
+gr4_a = pot4.iloc[:,0].copy().to_list()
 
 x = fixtures.loc['RMI','Gr2_home']
 print(x)
@@ -200,8 +201,33 @@ matchups = fixtures.columns.to_list()  # A list of the columns names of the fixt
 mathcups = matchups.remove('Group')   # Creating a list of the matchups of the fixtures  
 
 for team in teams_df['Team']:
-    for col in matchups: 
-        print(fixtures.loc[team, col])
+    for col in matchups:
+        if pd.isna(fixtures.loc[team,col]):
+            if col == 'Gr1_home':
+                x = gr1_h
+            elif col == 'Gr1_away':
+                x = gr1_a
+            elif col == 'Gr2_home':
+                x = gr1_h
+            elif col == 'Gr2_away':
+                x = gr1_a
+            elif col == 'Gr3_home':
+                x = gr1_h
+            elif col == 'Gr3_away':
+                x = gr1_a
+            elif col == 'Gr4_home':
+                x = gr1_h
+            else:
+                x = gr1_a                
+
+            opp_team = random.choice(x)
+            fixtures.loc[team,col] = opp_team
+            
+   
+ 
+
+
+        
 
 
 
