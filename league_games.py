@@ -201,53 +201,42 @@ matchups = fixtures.columns.to_list()  # A list of the columns names of the fixt
 mathcups = matchups.remove('Group')   # Creating a list of the matchups of the fixtures  
 
 for team in teams_df['Team']:
+    grp_no = fixtures.loc[team,'Group']
+    team_grp = ''.join(['Gr', grp_no])
+    print(team_grp )
+
     for col in matchups:
         if pd.isna(fixtures.loc[team,col]):
             if col == 'Gr1_home':
                 x = gr1_h
+                y = 'h'
             elif col == 'Gr1_away':
                 x = gr1_a
+                y = 'a'
             elif col == 'Gr2_home':
-                x = gr1_h
+                x = gr2_h
+                y = 'h'
             elif col == 'Gr2_away':
-                x = gr1_a
+                x = gr2_a
+                y = 'a'
             elif col == 'Gr3_home':
-                x = gr1_h
+                x = gr3_h
+                y = 'h'
             elif col == 'Gr3_away':
-                x = gr1_a
+                x = gr3_a
+                y = 'a'
             elif col == 'Gr4_home':
-                x = gr1_h
+                x = gr4_h
+                y = 'h'
             else:
-                x = gr1_a                
+                x = gr4_a
+                y = 'a'                
 
             opp_team = random.choice(x)
             fixtures.loc[team,col] = opp_team
             
    
- 
-
-
-        
 
 
 
 print(fixtures)
-'''
-# team is a string 
-#del gr1[gr1.index(team)]
-opponents = []
-my_grps = (gr1,gr2,gr3,gr4)
-# random team no selection
-i = 0
-for grp in my_grps:
-    team1 = random.choice(grp.iloc[:,0])    # Select a random team from the group
-
-    #print(grp.iloc[:,0])
-    #grp.remove(team1)   # Delete the selected team from the group
-    opponents.append(team1)   # Add the selected team into the list of opposition for the selected team
-    team2 = random.choice(grp.iloc[:,0])   # Select a second team from the group. Each team must play 2 teams from each group
-    #grp.remove(team2)  
-
-    opponents.append(team2)
-
-'''
