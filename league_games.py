@@ -193,12 +193,7 @@ gr3_a = pot3.iloc[:,0].copy().to_list()
 gr4_h = pot4.iloc[:,0].copy().to_list()
 gr4_a = pot4.iloc[:,0].copy().to_list()
 
-x = fixtures.loc['RMI','Gr2_home']
-print(x)
-fixtures.loc[x,'Gr1_away'] = 'RMI'
-print('RMI')
-b = 'Gr1_away'
-print(b[4]) 
+
 
 matchups = fixtures.columns.to_list()  # A list of the columns names of the fixtures dataframe
 mathcups = matchups.remove('Group')   # Creating a list of the matchups of the fixtures  
@@ -242,14 +237,14 @@ for team in teams_df['Team']:
             elif col[4] == 'h':
                 new_col = ''.join([team_grp, '_away'])
 
+            while pd.notna(fixtures.loc[opp_team,new_col]):
+                opp_team = random.choice(x)
+
             fixtures.loc[opp_team,new_col] = team
             
 
 
 
-            
-   
-
-
+print('Is this working???')
 
 print(fixtures)
