@@ -196,44 +196,57 @@ gr4_a = pot4.iloc[:,0].copy().to_list()
 x = fixtures.loc['RMI','Gr2_home']
 print(x)
 fixtures.loc[x,'Gr1_away'] = 'RMI'
+print('RMI')
+b = 'Gr1_away'
+print(b[4]) 
 
 matchups = fixtures.columns.to_list()  # A list of the columns names of the fixtures dataframe
 mathcups = matchups.remove('Group')   # Creating a list of the matchups of the fixtures  
 
 for team in teams_df['Team']:
     grp_no = fixtures.loc[team,'Group']
-    team_grp = ''.join(['Gr', grp_no])
-    print(team_grp )
+    team_grp = ''.join(['Gr', str(grp_no)])
 
     for col in matchups:
         if pd.isna(fixtures.loc[team,col]):
             if col == 'Gr1_home':
                 x = gr1_h
-                y = 'h'
+   
             elif col == 'Gr1_away':
                 x = gr1_a
-                y = 'a'
+ 
             elif col == 'Gr2_home':
                 x = gr2_h
-                y = 'h'
+
             elif col == 'Gr2_away':
                 x = gr2_a
-                y = 'a'
+
             elif col == 'Gr3_home':
                 x = gr3_h
-                y = 'h'
+
             elif col == 'Gr3_away':
                 x = gr3_a
-                y = 'a'
+
             elif col == 'Gr4_home':
                 x = gr4_h
-                y = 'h'
+
             else:
                 x = gr4_a
-                y = 'a'                
+               
 
             opp_team = random.choice(x)
             fixtures.loc[team,col] = opp_team
+
+            if col[4] == 'a':
+                new_col = ''.join([team_grp, '_home'])
+            elif col[4] == 'h':
+                new_col = ''.join([team_grp, '_away'])
+
+            fixtures.loc[opp_team,new_col] = team
+            
+
+
+
             
    
 
