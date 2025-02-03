@@ -157,50 +157,20 @@ def team_draw(gr1,gr2,gr3,gr4, team):
     return (opponents)
 
 def fixture_matchup(gr1,gr2,gr3,gr4,fixtures, teams_df):
-    # Allocating each group to a home and away list 
-    gr1_h = gr1.iloc[:,0].copy().to_list()
-    gr1_a = gr1.iloc[:,0].copy().to_list()
-    gr2_h = gr2.iloc[:,0].copy().to_list()
-    gr2_a = gr2.iloc[:,0].copy().to_list()
-    gr3_h = gr3.iloc[:,0].copy().to_list()
-    gr3_a = gr3.iloc[:,0].copy().to_list()
-    gr4_h = gr4.iloc[:,0].copy().to_list()
-    gr4_a = gr4.iloc[:,0].copy().to_list()
 
     matchups = fixtures.columns.to_list()  # A list of the columns names of the fixtures dataframe
     mathcups = matchups.remove('Group')   # Creating a list of the matchups of the fixtures  
     
+    # Loop through all the teams in teams_df 
     for team in teams_df['Team']:
-        grp_no = fixtures.loc[team,'Group']
-        team_grp = ''.join(['Gr', str(grp_no)])
+        grp_no = fixtures.loc[team,'Group']   # Get the group number for team 
+        team_grp = ''.join(['Gr', str(grp_no)])   # Add 'Gr' in front of the number as a string 
 
+        # Loop through the columns excluding the 'Group' column 
         for col in matchups:
             if pd.isna(fixtures.loc[team,col]):
-                if col == 'Gr1_home':
-                    x = gr1_h
-    
-                elif col == 'Gr1_away':
-                    x = gr1_a
-    
-                elif col == 'Gr2_home':
-                    x = gr2_h
-
-                elif col == 'Gr2_away':
-                    x = gr2_a
-
-                elif col == 'Gr3_home':
-                    x = gr3_h
-
-                elif col == 'Gr3_away':
-                    x = gr3_a
-
-                elif col == 'Gr4_home':
-                    x = gr4_h
-
-                else:
-                    x = gr4_a
-                
-
+                x = group_selection(col,gr1,gr2,gr3,gr4)
+        
                 opp_team = random.choice(x)
                 fixtures.loc[team,col] = opp_team
 
@@ -215,6 +185,28 @@ def fixture_matchup(gr1,gr2,gr3,gr4,fixtures, teams_df):
                 fixtures.loc[opp_team,new_col] = team
             
 
+def group_selection(selection,gr1,gr2,gr3,gr4): 
+        # Allocating each group to a list 
+    gr1_list = gr1.iloc[:,0].copy().to_list()
+    gr2_list = gr2.iloc[:,0].copy().to_list()
+    gr3_list = gr3.iloc[:,0].copy().to_list()
+    gr4_list = gr4.iloc[:,0].copy().to_list()
+
+
+    if selection == 'Gr1_home' or 'Gr1_away' :
+        x = gr1_list 
+
+    elif selection == 'Gr2_home' or 'Gr2_away':
+        x = gr2_list
+
+    elif selection == 'Gr3_home' or 'Gr3_away':
+        x = gr3_list
+
+    elif selection == 'Gr4_home' or 'Gr4_away':
+        x = gr4_list
+
+    return(x)
+
 
 
  
@@ -223,20 +215,20 @@ def fixture_matchup(gr1,gr2,gr3,gr4,fixtures, teams_df):
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
 (teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
 
+# Create a dataframe for the fixtures in the group stage 
 fixtures = pd.DataFrame(index=list(teams_df['Team']) ,columns=['Group','Gr1_home','Gr1_away','Gr2_home','Gr2_away','Gr3_home', 'Gr3_away','Gr4_home' ,'Gr4_away'])
-for i in teams_df['Team']:
-    k = teams_df[teams_df['Team'] == i].index
-    fixtures.loc[i,'Group'] = teams_df.iloc[k[0],-1]
 
-#print(fixtures)
+# Add the group number in the 'Group' column in the fixtures dataframe 
+for i in teams_df['Team']:
+    k = teams_df[teams_df['Team'] == i].index   # Get the index for the team i in the teams_df dataframe 
+    fixtures.loc[i,'Group'] = teams_df.iloc[k[0],-1]   # Get the group number for team i using the index found and placed in k 
+
 opps = team_draw(pot1,pot2,pot3,pot4, 'RMI')
 opps.insert(0,1)
 
 
-#print(opps)
-
 fixtures.loc['RMI'] = opps
 #print(fixtures)
-
+fixture_matchup(pot1,pot2,pot3,pot4,fixtures,teams_df)
 
 print(fixtures)
