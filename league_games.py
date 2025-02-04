@@ -168,11 +168,13 @@ def fixture_matchup(gr1,gr2,gr3,gr4,fixtures, teams_df):
 
         # Loop through the columns excluding the 'Group' column 
         for col in matchups:
+
+            # if the value at row = team and col = col is NaN
             if pd.isna(fixtures.loc[team,col]):
-                x = group_selection(col,gr1,gr2,gr3,gr4)
+                x = group_selection(col,gr1,gr2,gr3,gr4)   # Return the group corresponding to the column
         
-                opp_team = random.choice(x)
-                fixtures.loc[team,col] = opp_team
+                opp_team = random.choice(x)    # Select a random team from the group in x
+                fixtures.loc[team,col] = opp_team   # Store the randomly selected team in at [team, col]
 
                 if col[4] == 'a':
                     new_col = ''.join([team_grp, '_home'])
@@ -182,7 +184,7 @@ def fixture_matchup(gr1,gr2,gr3,gr4,fixtures, teams_df):
                 #while pd.notna(fixtures.loc[opp_team,new_col]):
                     #opp_team = random.choice(x)
 
-                fixtures.loc[opp_team,new_col] = team
+                fixtures.loc[opp_team,new_col] = team   # Add the team on the fixture list for the opposition
             
 
 def group_selection(selection,gr1,gr2,gr3,gr4): 
@@ -223,12 +225,5 @@ for i in teams_df['Team']:
     k = teams_df[teams_df['Team'] == i].index   # Get the index for the team i in the teams_df dataframe 
     fixtures.loc[i,'Group'] = teams_df.iloc[k[0],-1]   # Get the group number for team i using the index found and placed in k 
 
-opps = team_draw(pot1,pot2,pot3,pot4, 'RMI')
-opps.insert(0,1)
-
-
-fixtures.loc['RMI'] = opps
-#print(fixtures)
-fixture_matchup(pot1,pot2,pot3,pot4,fixtures,teams_df)
-
-print(fixtures)
+fixture_matchup(pot1,pot2,pot3,pot4,fixtures,teams_df)  # Determine the fixtures for the group stage
+print(fixtures)   # Print the fixtures for the group stage
