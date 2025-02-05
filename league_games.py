@@ -162,7 +162,7 @@ def fixture_matchup(gr1,gr2,gr3,gr4,fixtures, teams_df):
     mathcups = matchups.remove('Group')   # Creating a list of the matchups of the fixtures  
     
     # Loop through all the teams in teams_df 
-    for team in teams_df['Team']:
+    for team in gr1['Team']:
         grp_no = fixtures.loc[team,'Group']   # Get the group number for team 
         team_grp = ''.join(['Gr', str(grp_no)])   # Add 'Gr' in front of the number as a string 
 
@@ -174,39 +174,57 @@ def fixture_matchup(gr1,gr2,gr3,gr4,fixtures, teams_df):
                 x = group_selection(col,gr1,gr2,gr3,gr4)   # Return the group corresponding to the column
         
                 opp_team = random.choice(x)    # Select a random team from the group in x
-                fixtures.loc[team,col] = opp_team   # Store the randomly selected team in at [team, col]
+                #fixtures.loc[team,col] = opp_team   # Store the randomly selected team in at [team, col]  
 
                 if col[4] == 'a':
                     new_col = ''.join([team_grp, '_home'])
                 elif col[4] == 'h':
                     new_col = ''.join([team_grp, '_away'])
 
+                if pd.isna(fixtures.loc[opp_team,new_col]):
+                    fixtures.loc[team,col] = opp_team   # Store the randomly selected team in at [team, col] 
+                    fixtures.loc[opp_team,new_col] = team   # Add the team on the fixture list for the opposition
+                else:
+                    '''attempts = 0
+                    while pd.notna(fixtures.loc[opp_team,new_col]) and attempts < 9:
+                        attempts +=1
+                        opp_team = random.choice(x)   # Select a random team from the group in x
+                        if col[4] == 'a':
+                            new_col = ''.join([team_grp, '_home'])
+                        elif col[4] == 'h':
+                            new_col = ''.join([team_grp, '_away'])                       
+                        fixtures.loc[team,col] = opp_team   # Store the randomly selected team in at [team, col] 
+                        fixtures.loc[opp_team,new_col] = team   # Add the team on the fixture list for the opposition
+                    
+                    if attempts == 9: 
+                        print('cant find a match up')'''
+                    continue
+
+                    
                 #while pd.notna(fixtures.loc[opp_team,new_col]):
                     #opp_team = random.choice(x)
 
-                fixtures.loc[opp_team,new_col] = team   # Add the team on the fixture list for the opposition
-            
+               
 
 def group_selection(selection,gr1,gr2,gr3,gr4): 
-        # Allocating each group to a list 
+    # Allocating each group to a list 
     gr1_list = gr1.iloc[:,0].copy().to_list()
     gr2_list = gr2.iloc[:,0].copy().to_list()
     gr3_list = gr3.iloc[:,0].copy().to_list()
     gr4_list = gr4.iloc[:,0].copy().to_list()
 
-
-    if selection == 'Gr1_home' or 'Gr1_away' :
+    if selection in ('Gr1_home', 'Gr1_away') :
         x = gr1_list 
 
-    elif selection == 'Gr2_home' or 'Gr2_away':
+    elif selection in ('Gr2_home', 'Gr2_away'):
         x = gr2_list
 
-    elif selection == 'Gr3_home' or 'Gr3_away':
+    elif selection in ('Gr3_home', 'Gr3_away'):
         x = gr3_list
 
-    elif selection == 'Gr4_home' or 'Gr4_away':
+    elif selection in ('Gr4_home', 'Gr4_away'):
         x = gr4_list
-
+    
     return(x)
 
 
@@ -225,5 +243,7 @@ for i in teams_df['Team']:
     k = teams_df[teams_df['Team'] == i].index   # Get the index for the team i in the teams_df dataframe 
     fixtures.loc[i,'Group'] = teams_df.iloc[k[0],-1]   # Get the group number for team i using the index found and placed in k 
 
+
 fixture_matchup(pot1,pot2,pot3,pot4,fixtures,teams_df)  # Determine the fixtures for the group stage
 print(fixtures)   # Print the fixtures for the group stage
+
