@@ -229,12 +229,10 @@ def group_selection(selection,gr1,gr2,gr3,gr4):
 
 
 
-
-
 def schedule(gr1,gr2,gr3,gr4,fixtures, teams_df):
 
-    matchups = fixtures.columns.to_list()  # A list of the columns names of the fixtures dataframe
-    mathcups = matchups.remove('Group')   # Creating a list of the matchups of the fixtures  
+    matchups = fixtures.columns.to_list()  # A list of the columns names of the fixtures 
+    matchups.remove(matchups[0])   # Creating a list of the matchups of the fixtures
     
     # Loop through all the teams in teams_df 
     for team in gr1['Team']:
@@ -264,10 +262,6 @@ def schedule(gr1,gr2,gr3,gr4,fixtures, teams_df):
                     fixtures.loc[opp_team,opp_col] = team   # Add the team on the fixture list for the opposition
                 else:
                     continue
-
-                    
-                #while pd.notna(fixtures.loc[opp_team,new_col]):
-                    #opp_team = random.choice(x)
 
 
 
