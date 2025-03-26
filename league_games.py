@@ -26,7 +26,7 @@ def league_team():
             team_name = input(f"Enter the team name: ")
             # teams' location 
             team_location = input("Enter team location: ")
-            # teams' points 
+            # teams' points 36
             team_points = input("Enter the team points: ")
             team_info = ",".join([team_name,team_location,team_points])
             teams = teams + team_info + '\n'
@@ -90,7 +90,7 @@ def league_groups(df):
     print('Group 2:\n' , gr2 , '\n')
     print('Group 3:\n' , gr3 , '\n')
     print('Group 4:\n' , gr4 , '\n')'''
- 
+  
     return(df,gr1, gr2, gr3, gr4)
 
 
@@ -185,24 +185,8 @@ def fixture_matchup(gr1,gr2,gr3,gr4,fixtures, teams_df):
                     fixtures.loc[team,col] = opp_team   # Store the randomly selected team in at [team, col] 
                     fixtures.loc[opp_team,new_col] = team   # Add the team on the fixture list for the opposition
                 else:
-                    '''attempts = 0
-                    while pd.notna(fixtures.loc[opp_team,new_col]) and attempts < 9:
-                        attempts +=1
-                        opp_team = random.choice(x)   # Select a random team from the group in x
-                        if col[4] == 'a':
-                            new_col = ''.join([team_grp, '_home'])
-                        elif col[4] == 'h':
-                            new_col = ''.join([team_grp, '_away'])                       
-                        fixtures.loc[team,col] = opp_team   # Store the randomly selected team in at [team, col] 
-                        fixtures.loc[opp_team,new_col] = team   # Add the team on the fixture list for the opposition
-                    
-                    if attempts == 9: 
-                        print('cant find a match up')'''
+                   
                     continue
-
-                    
-                #while pd.notna(fixtures.loc[opp_team,new_col]):
-                    #opp_team = random.choice(x)
 
                
 
@@ -263,6 +247,13 @@ def schedule(gr1,gr2,gr3,gr4,fixtures, teams_df):
                 else:
                     continue
 
+                check_nan = fixtures.isnull().values.any()
+                print(check_nan)
+
+
+
+
+
 
 
 
@@ -270,6 +261,7 @@ def schedule(gr1,gr2,gr3,gr4,fixtures, teams_df):
 # League teams group stage draw for opposition
 #league_team()   # Input team in the league
 (teams_df) = read_teams()    # Put the team information into a DataFrame 
+print(teams_df)
 (teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
 
 # Create a dataframe for the fixtures in the group stage 
@@ -279,11 +271,6 @@ fixtures = pd.DataFrame(index=list(teams_df['Team']) ,columns=['Group','Gr1_home
 for i in teams_df['Team']:
     k = teams_df[teams_df['Team'] == i].index   # Get the index for the team i in the teams_df dataframe 
     fixtures.loc[i,'Group'] = teams_df.iloc[k[0],-1]   # Get the group number for team i using the index found and placed in k 
-
-
-#fixture_matchup(pot1,pot2,pot3,pot4,fixtures,teams_df)  # Determine the fixtures for the group stage
-
-schedule(pot1,pot2,pot3,pot4,fixtures,teams_df)  # Determine the fixtures for the group stage
 
 print(fixtures)   # Print the fixtures for the group stage
 
