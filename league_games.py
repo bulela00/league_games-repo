@@ -296,6 +296,20 @@ for k in range(36):
     for match in matches:
         opposition = fixtures.loc[selected_team, match]
         if math.isnan(opposition):
-            print('yes')
+            ##fixtures.loc[selected_team, match] = 'newteam'
+            if match[2] == '1':
+                fixtures.loc[selected_team, match] = 'gr1team'
+            elif match[2] == '2':
+                fixtures.loc[selected_team, match] = 'gr2team'
+            elif match[2] == '3':
+                fixtures.loc[selected_team, match] = 'gr3team'
+            elif match[2] == '4':
+                fixtures.loc[selected_team,match] = 'gr4team'
+            
+        else:
+            break
+
+
+print(fixtures)
 
 
