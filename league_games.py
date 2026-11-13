@@ -37,6 +37,7 @@ def league_team():
             file.write(teams)
    
     else:  
+        # Write the default contents onto the teams.txt file 
         with open('teams.txt', 'w+', encoding='utf-8-sig') as file:
             file.write(default_contents)       
         print("The default list of teams will be used \n ")
@@ -70,7 +71,7 @@ def read_teams():
 # This function splits the teams in the league into 4 groups 
 def league_groups(df):
 
-    # df is the teams_list 
+    # Convert team points column into numeric values
     df['Team_points'] = pd.to_numeric(df['Team_points'])
 
     # sort teams by team points 
@@ -92,15 +93,9 @@ def league_groups(df):
     return(df,gr1, gr2, gr3, gr4)
 
 
-# This function selects a random team from the specified group
-def team_selection(grp):
-    team = random.choice(grp.iloc[:,0])    # Select a random team from the group
-    team_location = grp[grp['Team'] == team]['Team_location'].iloc[0]
-    return(team, team_location)
-
 def team_fixtures(gr1,gr2,gr3,gr4,df):
     grps = (gr1,gr2,gr3,gr4)    # Create a list of the grps             
-    for grp in grps:    # Looping through the goofs
+    for grp in grps:    # Looping through the groups
 
         while grp.shape[0] > 0: 
             (selected_team, selected_location) = team_selection(grp)  # Select a random team from pot 1 
@@ -111,19 +106,6 @@ def team_fixtures(gr1,gr2,gr3,gr4,df):
             #print(f'Opposition: {opps}')
         #print('\n\n\n\n')
         #print(f'Remaining group: {grp}')
-        
-
-           
-
-# This function identifies teams in the same location and excludes them for the team
-def same_loc(location, gr1, gr2, gr3, gr4): 
-    grps = (gr1,gr2,gr3,gr4)
-    excl_teams = []
-    for grp in grps:
-        grp.query('Team_location == location', inplace=True) 
-        excl_teams.append(grp['Team'])
-
-    return(excl_teams)
 
 
 # This function randomly selects the opponents 
@@ -188,33 +170,54 @@ def fixture_matchup(gr1,gr2,gr3,gr4,fixtures, teams_df):
 
                
 
-def group_selection(selection,gr1,gr2,gr3,gr4): 
+def group_selection(grp_no, gr1, gr2, gr3, gr4): 
     # Allocating each group to a list 
-    gr1_list = gr1.iloc[:,0].copy().to_list()
-    gr2_list = gr2.iloc[:,0].copy().to_list()
-    gr3_list = gr3.iloc[:,0].copy().to_list()
-    gr4_list = gr4.iloc[:,0].copy().to_list()
 
-    if selection in ('Gr1_home', 'Gr1_away') :
-        x = gr1_list 
+    if grp_no[2] == '1' :
+        x = gr1 
 
-    elif selection in ('Gr2_home', 'Gr2_away'):
-        x = gr2_list
+    elif grp_no[2] == '2':
+        x = gr2
 
-    elif selection in ('Gr3_home', 'Gr3_away'):
-        x = gr3_list
+    elif grp_no[2] == '3':
+        x = gr3
 
-    elif selection in ('Gr4_home', 'Gr4_away'):
-        x = gr4_list
+    elif grp_no[2] == '4':
+        x = gr4
     
     return(x)
 
+def opp_check(team, team_grp, opp, curr_col, current_schedule ):
+    # This function is used to check if the team drawn as opposition is available for the fixture
+    opp # This is the opposition team being investigated
+    if curr_col[4] == 'h':
+        opp_col = "_".join([team_grp,"away"]) # Variable used to check the opponenants availability
+    else:
+        opp_col = "_".join([team_grp,"home"])
+    
+    print(f'opp_col : {opp_col}')
 
+    if pd.isna(current_schedule.loc[opp,opp_col]) :   # Check if the match is open
+        if team not in current_schedule.loc[opp].values:  # If the teams haven't already been matched up
+            current_schedule.loc[opp,opp_col] = team
+            current_schedule.loc[team,curr_col] = opp
+        else :
+            print('Redraw')
+
+    
+    else:         
+        print('Redraw')
+        
+
+
+
+
+    
+    
 
 def schedule(gr1,gr2,gr3,gr4,fixtures, teams_df):
 
-    matchups = fixtures.columns.to_list()  # A list of the columns names of the fixtures 
-    matchups.remove(matchups[0])   # Creating a list of the matchups of the fixtures
+    matches = ['Gr1_home','Gr1_away','Gr2_home','Gr2_away','Gr3_home', 'Gr3_away','Gr4_home' ,'Gr4_away'] # A list of columns fixture df
     
     # Loop through all the teams in teams_df 
     for team in gr1['Team']:
@@ -222,7 +225,7 @@ def schedule(gr1,gr2,gr3,gr4,fixtures, teams_df):
         team_grp = ''.join(['Gr', str(grp_no)])   # Add 'Gr' in front of the number as a string 
 
         # Loop through the columns excluding the 'Group' column 
-        for col in matchups:
+        for col in matches:
 
             # if the value at row = team and col = col is NaN
             if pd.isna(fixtures.loc[team,col]):
@@ -252,13 +255,19 @@ def schedule(gr1,gr2,gr3,gr4,fixtures, teams_df):
 
 
 #=========Operations=======
-# read in default league data 
+# Selection between the default data set and input
+
+
+
+# read in default.txt league data 
+# default_contents used if no new data is given 
 default_contents = ""
 with open('default.txt', 'r+') as f: # Open the file again, this time using the 'with' syntax
         for line in f:
-                default_contents = default_contents + line               
- 
-# League teams group stage draw for opposition
+                default_contents = default_contents + line    
+
+
+# League teams group stage draw for  opposition
 league_team()   # Input teams in the league
 
 (teams_df) = read_teams()    # Put the team information into a DataFrame
@@ -266,12 +275,24 @@ print("League teams' information")
 print(teams_df)
 
 (teams_df,pot1, pot2, pot3, pot4) = league_groups(teams_df)    # Split teams into 4 groups by team points
+
+team_list = list(teams_df['Team'])   # Create a new list with all the team names
+
 # Printing the groups
-print('\nThese are the groups:')
-print('Group 1:\n' , pot1.drop(['Group'], axis=1) , '\n')
-print('Group 2:\n' , pot2.drop(['Group'], axis=1) , '\n')
-print('Group 3:\n', pot3.drop(['Group'], axis=1) , '\n')
-print('Group 4:\n' , pot4.drop(['Group'], axis=1), '\n')
+print('\nThese are the groups:')  
+gr1_list = list(pot1['Team']) # Creates a list of the teams in the group
+gr2_list = list(pot2['Team'])
+gr3_list = list(pot3['Team'])
+gr4_list = list(pot4['Team'])
+
+print('Group 1:')
+print(*gr1_list)
+print('Group 2:')
+print(*gr2_list)
+print('Group 3:')
+print(*gr3_list)
+print('Group 4:')
+print(*gr4_list)        
 
 # Create a dataframe for the fixtures in the group stage 
 fixtures = pd.DataFrame(index=list(teams_df['Team']) ,columns=['Group','Gr1_home','Gr1_away','Gr2_home','Gr2_away','Gr3_home', 'Gr3_away','Gr4_home' ,'Gr4_away'])
@@ -281,35 +302,37 @@ for i in teams_df['Team']:
     k = teams_df[teams_df['Team'] == i].index   # Get the index for the team i in the teams_df dataframe 
     fixtures.loc[i,'Group'] = teams_df.iloc[k[0],-1]   # Get the group number for team i using the index found and placed in k   
 
-# Team draw 
-team_list = list(teams_df['Team'])   # Create a new list with the team names
-for k in range(36):
-    selected_team = random.choice(team_list)   # Select a random team from the team list
-    team_list.remove(selected_team) # Remove selected team from team list 
-    #print(fixtures.loc[selected_team,:])   # print the randomly selected team 
 
-    # In the match up draw 2 checks must be made 
-    # 1. Is there an empty slot in the selected teams schedule? (if there is no opening pass that slot)
-    # 2. Does the team drawn already have a team in the spot you would occupy (If the drawn team already has a team then draw a new opponent )
-    team_grp = fixtures.loc[selected_team,'Group']
-    matches = ['Gr1_home','Gr1_away','Gr2_home','Gr2_away','Gr3_home', 'Gr3_away','Gr4_home' ,'Gr4_away']
-    for match in matches:
-        opposition = fixtures.loc[selected_team, match]
-        if math.isnan(opposition):
-            ##fixtures.loc[selected_team, match] = 'newteam'
-            if match[2] == '1':
-                fixtures.loc[selected_team, match] = 'gr1team'
-            elif match[2] == '2':
-                fixtures.loc[selected_team, match] = 'gr2team'
-            elif match[2] == '3':
-                fixtures.loc[selected_team, match] = 'gr3team'
-            elif match[2] == '4':
-                fixtures.loc[selected_team,match] = 'gr4team'
-            
-        else:
-            break
+# Team draw for fixtures
+
+# A team from the entire league is selected at random
+while fixtures.isna().any().any():
+    team_select = random.choice(team_list)
+    team_select_grp = 'Gr' + str(fixtures.loc[team_select,'Group']) 
+    fixture_cols = ['Gr1_home','Gr1_away','Gr2_home','Gr2_away','Gr3_home', 'Gr3_away','Gr4_home' ,'Gr4_away']
+
+    col_index = 0
+    while col_index < 8: 
+
+        team_col = fixture_cols[col_index]
+        grp_list = group_selection(team_col, gr1_list, gr2_list, gr3_list, gr4_list)   # Retrieve the correct group list for column
+        while pd.isna(fixtures.loc[team_select,team_col]):
+            opp_select = random.choice(grp_list)
+            opp_check(team_select, team_select_grp, opp_select, team_col, fixtures)
+            #grp_list.remove(opp_select)
+        col_index +=1
+
+    team_list.remove(team_select) # Remove team from selection options
+
+
+
+#fixtures.loc[team_select]   # Selects the fixtures of the selected team
+
 
 
 print(fixtures)
 
 
+
+# print(len(team_list)) Confirmation of team left (Condition to stop the for loop)
+print('done')
